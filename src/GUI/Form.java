@@ -5,12 +5,28 @@
  */
 package GUI;
 
+import GUI.Form;
+import Cryption.*;
+import java.io.File;
+import javax.swing.JFileChooser;
+
 /**
  *
  * @author COMPUTER
  */
 public class Form extends javax.swing.JFrame {
-
+    JFileChooser inputChooser;
+    JFileChooser keyChooser;
+    JFileChooser outputChooser;
+    
+    File inputFile;
+    File keyFile;
+    File outputFile;
+    
+    String inputName;
+    String keyName ;
+    String outputName;
+    
     /**
      * Creates new form Form
      */
@@ -28,6 +44,9 @@ public class Form extends javax.swing.JFrame {
     private void initComponents() {
 
         jFileChooser1 = new javax.swing.JFileChooser();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroup3 = new javax.swing.ButtonGroup();
         tabPane = new javax.swing.JTabbedPane();
         encryptPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -35,7 +54,7 @@ public class Form extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         inputButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        inputTextfiled = new javax.swing.JTextField();
+        inputTextfield = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         outputTextfield = new javax.swing.JTextField();
         outputButton = new javax.swing.JButton();
@@ -46,7 +65,7 @@ public class Form extends javax.swing.JFrame {
         keyTextfield = new javax.swing.JTextField();
         keyButton = new javax.swing.JButton();
         aesRadioButton = new javax.swing.JRadioButton();
-        dẻadioButton = new javax.swing.JRadioButton();
+        desradioButton = new javax.swing.JRadioButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         integrityPanel = new javax.swing.JPanel();
 
@@ -61,14 +80,14 @@ public class Form extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addComponent(jLabel1)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(248, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         inputButton.setText("Browse");
@@ -80,19 +99,34 @@ public class Form extends javax.swing.JFrame {
 
         jLabel2.setText("Choose Input File");
 
-        inputTextfiled.addActionListener(new java.awt.event.ActionListener() {
+        inputTextfield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputTextfiledActionPerformed(evt);
+                inputTextfieldActionPerformed(evt);
             }
         });
 
         jLabel3.setText("Choose Output File Sava as");
 
         outputButton.setText("Save as");
+        outputButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                outputButtonActionPerformed(evt);
+            }
+        });
 
         encryptButton.setText("Encrypt");
+        encryptButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                encryptButtonActionPerformed(evt);
+            }
+        });
 
         decryptButton.setText("Decrypt");
+        decryptButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                decryptButtonActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Choose Algorithm");
 
@@ -107,7 +141,7 @@ public class Form extends javax.swing.JFrame {
 
         aesRadioButton.setText("AES");
 
-        dẻadioButton.setText("DES");
+        desradioButton.setText("DES");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -119,7 +153,7 @@ public class Form extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(aesRadioButton)
                         .addGap(38, 38, 38)
-                        .addComponent(dẻadioButton))
+                        .addComponent(desradioButton))
                     .addComponent(jLabel4)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -133,7 +167,7 @@ public class Form extends javax.swing.JFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
                             .addComponent(keyTextfield, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(outputTextfield, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(inputTextfiled, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(inputTextfield, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(39, 39, 39)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(inputButton)
@@ -148,12 +182,12 @@ public class Form extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(aesRadioButton)
-                    .addComponent(dẻadioButton))
+                    .addComponent(desradioButton))
                 .addGap(9, 9, 9)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(inputTextfiled, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inputTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(inputButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
@@ -180,19 +214,19 @@ public class Form extends javax.swing.JFrame {
             .addGroup(encryptPanelLayout.createSequentialGroup()
                 .addGroup(encryptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(encryptPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(encryptPanelLayout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(50, Short.MAX_VALUE))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(encryptPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         encryptPanelLayout.setVerticalGroup(
             encryptPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(encryptPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -230,22 +264,84 @@ public class Form extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void inputTextfiledActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputTextfiledActionPerformed
+    private void inputTextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputTextfieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_inputTextfiledActionPerformed
+    }//GEN-LAST:event_inputTextfieldActionPerformed
 
     private void inputButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputButtonActionPerformed
         // TODO add your handling code here:
+        inputChooser = new JFileChooser();
+        inputChooser.showOpenDialog(null);   
+        //inputFile = inputChooser.getSelectedFile();
+        inputFile = inputChooser.getCurrentDirectory();
+        inputName = inputFile.getAbsolutePath();
+        inputTextfield.setText(inputName);
+        
+        
     }//GEN-LAST:event_inputButtonActionPerformed
 
     private void keyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keyButtonActionPerformed
         // TODO add your handling code here:
+        keyChooser = new JFileChooser();
+        keyChooser.showOpenDialog(null);   
+        keyFile = keyChooser.getSelectedFile();
+        keyName = keyFile.getAbsolutePath();
+        keyTextfield.setText(keyName);
     }//GEN-LAST:event_keyButtonActionPerformed
+
+    private void outputButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputButtonActionPerformed
+        // TODO add your handling code here:
+        outputChooser = new JFileChooser();
+        outputChooser.showOpenDialog(null);   
+        outputFile = outputChooser.getSelectedFile();
+        outputName = outputFile.getAbsolutePath();
+        outputTextfield.setText(outputName);
+        
+    }//GEN-LAST:event_outputButtonActionPerformed
+
+    private void encryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encryptButtonActionPerformed
+        // TODO add your handling code here:
+        encrypt();
+    }//GEN-LAST:event_encryptButtonActionPerformed
+
+    private void decryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decryptButtonActionPerformed
+        // TODO add your handling code here:
+        decrypt();
+    }//GEN-LAST:event_decryptButtonActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    
+    public void encrypt()
+    {
+        String inputPath = inputTextfield.getText();
+        String keyPath = keyTextfield.getText();
+        String outputPath = outputTextfield.getText();
+        
+        File input = new File(inputPath);
+        File key = new File(keyPath);
+        File output = new File(outputPath);
+        
+        Encrypt en = Encrypt.getEncrypter(false);
+        en.encryptor(input, key, output);
+    }
+    
+    public void decrypt()
+    {
+        String inputPath = inputTextfield.getText();
+        String keyPath = keyTextfield.getText();
+        String outputPath = outputTextfield.getText();
+        
+        File input = new File(inputPath);
+        File key = new File(keyPath);
+        File output = new File(outputPath);
+        
+        Decrypt en = Decrypt.getDecrypter(false);
+        en.decryptor(input, key, output);
+    }
+    
+    public static void createForm() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -279,12 +375,15 @@ public class Form extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton aesRadioButton;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JButton decryptButton;
-    private javax.swing.JRadioButton dẻadioButton;
+    private javax.swing.JRadioButton desradioButton;
     private javax.swing.JButton encryptButton;
     private javax.swing.JPanel encryptPanel;
     private javax.swing.JButton inputButton;
-    private javax.swing.JTextField inputTextfiled;
+    private javax.swing.JTextField inputTextfield;
     private javax.swing.JPanel integrityPanel;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;

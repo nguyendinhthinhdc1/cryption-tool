@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import Cryption.*;
+import GUI.*;
 /**
  *
  * @author COMPUTER
@@ -18,16 +19,19 @@ import Cryption.*;
 public class Main {
     public static void main(String[] args)
     {
-        Encrypt en = Encrypt.getEncrypter(false);
-        Decrypt de = Decrypt.getDecrypter(false);
-
-        File src = new File("F:/192/test/file/assignment1.pdf");
-        File dst = new File("F:/192/test/encrypt");
-        File key = new File("F:/192/test/key.txt");
-        File src1 = new File("F:/192/test/encrypt");
-
-        //en.encryptor(src, dst,key);
-        de.decryptor(src1, dst, key);
+        Form form= new Form();
+        form.createForm(); 
+        
+//        Encrypt en = Encrypt.getEncrypter(false);
+//        Decrypt de = Decrypt.getDecrypter(false);
+//
+//        File src = new File("F:/192/test/file/assignment1.pdf");
+//        File dst = new File("F:/192/test/encrypt");
+//        File key = new File("F:/192/test/key.txt");
+//        File src1 = new File("F:/192/test/encrypt");
+//
+//        //en.encryptor(src, dst,key);
+//        de.decryptor(src1, dst, key);
         
         
     }
