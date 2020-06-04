@@ -41,7 +41,7 @@ public class AES {
         }
     }
  
-    public static String encrypt(String strToEncrypt, String secret) 
+    public static byte[] encrypt(byte[] strToEncrypt, String secret) 
     {
         try
         {
@@ -49,8 +49,8 @@ public class AES {
             //SecretKeySpec key = new SecretKeySpec(secret.getBytes(), "AES");
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-            return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
-            //return cipher.doFinal(strToEncrypt);
+            //return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
+            return cipher.doFinal(strToEncrypt);
         } 
         catch (Exception e) 
         {
@@ -59,7 +59,7 @@ public class AES {
         return null;
     }
  
-    public static String decrypt(String strToDecrypt, String secret) 
+    public static byte[] decrypt(byte[] strToDecrypt, String secret) 
     {
         try
         {
@@ -67,8 +67,9 @@ public class AES {
             //SecretKeySpec key = new SecretKeySpec(secret.getBytes(), "AES");
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
-            //return cipher.doFinal(strToDecrypt);
+            //return new String(cipher.doFinal(Base64.getMimeDecoder().decode(strToDecrypt)));
+            return cipher.doFinal(strToDecrypt);
+            
         } 
         catch (Exception e) 
         {
