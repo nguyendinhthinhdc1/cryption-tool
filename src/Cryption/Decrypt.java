@@ -5,6 +5,7 @@
  */
 package Cryption;
 
+import GUI.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -32,7 +33,7 @@ public class Decrypt
         return decrypter;
     }
 
-    public void decryptor(File src, File dst,File key)
+    public void decryptor(File src, File dst,File key,GUI.Form.algorithm alg,GUI.Form form)
     {
         if (!dst.exists())
                 dst.mkdir();
@@ -42,21 +43,27 @@ public class Decrypt
         {
             if (!src.isDirectory())
             {
-                copyDecrypted(src, dst,key);
-                System.out.println("Decryting...");
+                form.updateAreaText("Decryting...");
+                copyDecrypted(src, dst,key,alg);
                 if(deleteOriginal) src.delete();
                 System.out.println("1 files is decrytped");
             } else
             {
                 File[] files = src.listFiles();
-                System.out.println("Decryting...");
+                form.updateAreaText("Decryting...");
 
                 for (File f : files)
                 {
-                    copyDecrypted(f, dst,key);
+                    copyDecrypted(f, dst,key,alg);
                     if(deleteOriginal) f.delete();
                 }
-                System.out.println(files.length + " files are decrytped");
+                if(files.length==1)
+                {
+                    form.updateAreaText(" 1 files is decrypted");
+                }
+                else{
+                    form.updateAreaText(files.length + " files are decrypted");
+                }
             }
         } catch (IOException e)
         {
@@ -64,7 +71,7 @@ public class Decrypt
         }
     }
 
-    public void copyDecrypted(File source, File dest,File key) throws IOException
+    public void copyDecrypted(File source, File dest,File key,GUI.Form.algorithm alg) throws IOException
     {
 
         FileInputStream fis = new FileInputStream(key);
@@ -89,7 +96,13 @@ public class Decrypt
             System.out.println(sizename);
             
             is.read(buffer);
-            os.write(AES.decrypt(buffer, genKey));
+            if(alg.equals(Form.algorithm.aes)){
+                os.write(AES.decrypt(buffer, genKey));
+            }
+            else
+            {
+                os.write(DES.decrypt(buffer, genKey));
+            }
             
             
 

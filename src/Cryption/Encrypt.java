@@ -6,6 +6,7 @@
 package Cryption;
 
 
+import GUI.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,12 +38,12 @@ public class Encrypt
 {
     private static Encrypt encrypter = new Encrypt();
     private static boolean deleteOriginal;
+    //Form.algorithm alg ;
 //    private static byte[] key=null;
 //    public static File keyFile;
     
     private Encrypt() 
     {
-
     }
 
     public static Encrypt getEncrypter(boolean originalFileDeleted)
@@ -50,8 +51,10 @@ public class Encrypt
         deleteOriginal = originalFileDeleted;
         return encrypter;
     }
-    public void encryptor(File src, File dst,File key)
+
+    public void encryptor(File src, File dst,File key,GUI.Form.algorithm alg,GUI.Form form )
     {
+     
         if (!dst.exists())
             dst.mkdir();
         if (!dst.isDirectory())
@@ -61,21 +64,26 @@ public class Encrypt
             if (!src.isDirectory())
             {
                 //File newFile = src.getAbsoluteFile();
-                System.out.println("Encrypting...");
-                copyEncrypted(src, dst,key);
-                
+                form.updateAreaText("Crypting.....");
+                copyEncrypted(src, dst,key,alg);     
                 if(deleteOriginal) src.delete();
-                System.out.println(" 1 files is encrypted");
+                form.updateAreaText(" 1 files is encrypted");
             } else
             {
                 File[] files = src.listFiles();
-                System.out.println("Encrypting...");
+                form.updateAreaText("Encrypting...");
                 for (File f : files)
                 {
-                    copyEncrypted(f, dst,key);
+                    copyEncrypted(f, dst,key,alg);
                     if(deleteOriginal) f.delete();
                 }
-                System.out.println(files.length + " files are encrypted");
+                if(files.length==1)
+                {
+                    form.updateAreaText(" 1 files is encrypted");
+                }
+                else{
+                    form.updateAreaText(files.length + " files are encrypted");
+                }
             }
         } catch (IOException e)
         {
@@ -83,7 +91,7 @@ public class Encrypt
         }
     }
 
-    public void copyEncrypted(File source, File dest,File key) throws IOException
+    public void copyEncrypted(File source, File dest,File key,GUI.Form.algorithm alg) throws IOException
     {
 
         FileInputStream fis = new FileInputStream(key);
@@ -105,7 +113,13 @@ public class Encrypt
 
             byte[] buffer = new byte[(int)source.length()];
             is.read(buffer);
-            os.write(AES.encrypt(buffer, genKey));
+            if(alg.equals(Form.algorithm.aes)){
+                os.write(AES.encrypt(buffer, genKey));
+            }
+            else
+            {
+                os.write(DES.encrypt(buffer, genKey));
+            }
 
         } finally
         {

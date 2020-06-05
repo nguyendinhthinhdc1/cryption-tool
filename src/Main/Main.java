@@ -26,6 +26,9 @@ public class Main {
     public static void main(String[] args) throws IOException
     {
         Form form= new Form();
+       
+        //form.updateAreaText("jhhhkhkhk");
+        //form.setVisible(true);
         form.createForm();
 //        
 //        Encrypt en = Encrypt.getEncrypter(false);

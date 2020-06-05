@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.*;
 
 /**
  *
@@ -34,13 +35,13 @@ public class Form extends javax.swing.JFrame {
     String outputName;
     String md5Name;
     
-    
-    enum mode{single,folder};
-    enum algorithm{des,aes};
+    public enum mode{single,folder};
+    public enum algorithm{des,aes};
     mode cmode;
     algorithm alg;
     boolean flag_alg=false,flag_mode=false;
     boolean flag_crypt=false;
+    boolean flag_inte=false;
     
     /**
      * Creates new form Form
@@ -52,7 +53,7 @@ public class Form extends javax.swing.JFrame {
         outputButton.setEnabled(false);
         encryptButton.setEnabled(false);
         decryptButton.setEnabled(false);
-  
+        genButton.setEnabled(false);
     }
 
     /**
@@ -93,6 +94,7 @@ public class Form extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         txtsecondMd5 = new javax.swing.JTextField();
         btnSecondMd5 = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         textArea = new javax.swing.JTextArea();
 
@@ -108,7 +110,14 @@ public class Form extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Encrypt and Decrypt Files");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        panelMain.setBackground(new java.awt.Color(102, 255, 102));
+
+        inputButton.setBackground(new java.awt.Color(214, 168, 215));
+        inputButton.setForeground(new java.awt.Color(154, 69, 186));
+        inputButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/sfile.png"))); // NOI18N
         inputButton.setText("Browse");
         inputButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,6 +135,9 @@ public class Form extends javax.swing.JFrame {
 
         jLabel3.setText("Choose Output Directory");
 
+        outputButton.setBackground(new java.awt.Color(214, 168, 215));
+        outputButton.setForeground(new java.awt.Color(154, 69, 186));
+        outputButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/sfile.png"))); // NOI18N
         outputButton.setText("Browse");
         outputButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,6 +145,8 @@ public class Form extends javax.swing.JFrame {
             }
         });
 
+        encryptButton.setBackground(new java.awt.Color(214, 168, 215));
+        encryptButton.setForeground(new java.awt.Color(154, 69, 186));
         encryptButton.setText("Encrypt");
         encryptButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,6 +154,8 @@ public class Form extends javax.swing.JFrame {
             }
         });
 
+        decryptButton.setBackground(new java.awt.Color(214, 168, 215));
+        decryptButton.setForeground(new java.awt.Color(154, 69, 186));
         decryptButton.setText("Decrypt");
         decryptButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,6 +173,9 @@ public class Form extends javax.swing.JFrame {
             }
         });
 
+        keyButton.setBackground(new java.awt.Color(214, 168, 215));
+        keyButton.setForeground(new java.awt.Color(154, 69, 186));
+        keyButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/sfile.png"))); // NOI18N
         keyButton.setText("Browse");
         keyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,6 +183,7 @@ public class Form extends javax.swing.JFrame {
             }
         });
 
+        radioButtonAES.setBackground(new java.awt.Color(252, 121, 3));
         buttonGroupAlgorithm.add(radioButtonAES);
         radioButtonAES.setText("AES");
         radioButtonAES.addActionListener(new java.awt.event.ActionListener() {
@@ -172,6 +192,7 @@ public class Form extends javax.swing.JFrame {
             }
         });
 
+        radioButtonDES.setBackground(new java.awt.Color(252, 121, 3));
         buttonGroupAlgorithm.add(radioButtonDES);
         radioButtonDES.setText("DES");
         radioButtonDES.addActionListener(new java.awt.event.ActionListener() {
@@ -182,6 +203,7 @@ public class Form extends javax.swing.JFrame {
 
         jLabel6.setText("Choose Mode:");
 
+        radioButtonSingleFile.setBackground(new java.awt.Color(252, 121, 3));
         buttonGroupMode.add(radioButtonSingleFile);
         radioButtonSingleFile.setText("Single File");
         radioButtonSingleFile.addActionListener(new java.awt.event.ActionListener() {
@@ -190,6 +212,7 @@ public class Form extends javax.swing.JFrame {
             }
         });
 
+        radioButtonFolder.setBackground(new java.awt.Color(252, 121, 3));
         buttonGroupMode.add(radioButtonFolder);
         radioButtonFolder.setText("Folder");
         radioButtonFolder.addActionListener(new java.awt.event.ActionListener() {
@@ -206,6 +229,9 @@ public class Form extends javax.swing.JFrame {
             }
         });
 
+        btnFirstMd5.setBackground(new java.awt.Color(214, 168, 215));
+        btnFirstMd5.setForeground(new java.awt.Color(154, 69, 186));
+        btnFirstMd5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/sfile.png"))); // NOI18N
         btnFirstMd5.setText("Browse");
         btnFirstMd5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -213,6 +239,8 @@ public class Form extends javax.swing.JFrame {
             }
         });
 
+        genButton.setBackground(new java.awt.Color(214, 168, 215));
+        genButton.setForeground(new java.awt.Color(154, 69, 186));
         genButton.setText("Check integrity of two files");
         genButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -228,12 +256,21 @@ public class Form extends javax.swing.JFrame {
             }
         });
 
+        btnSecondMd5.setBackground(new java.awt.Color(214, 168, 215));
+        btnSecondMd5.setForeground(new java.awt.Color(154, 69, 186));
+        btnSecondMd5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/sfile.png"))); // NOI18N
         btnSecondMd5.setText("Browse");
         btnSecondMd5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSecondMd5ActionPerformed(evt);
             }
         });
+
+        textArea.setEditable(false);
+        textArea.setColumns(20);
+        textArea.setForeground(new java.awt.Color(1, 1, 1));
+        textArea.setRows(5);
+        jScrollPane1.setViewportView(textArea);
 
         javax.swing.GroupLayout panelMainLayout = new javax.swing.GroupLayout(panelMain);
         panelMain.setLayout(panelMainLayout);
@@ -243,69 +280,74 @@ public class Form extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelMainLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(32, 32, 32)
-                        .addComponent(txtFirstMd5)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnFirstMd5))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMainLayout.createSequentialGroup()
-                        .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(panelMainLayout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)
-                                .addComponent(keyTextfield))
-                            .addGroup(panelMainLayout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(inputTextfield)))
-                        .addGap(34, 34, 34)
-                        .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(keyButton)
-                            .addComponent(inputButton)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMainLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(10, 10, 10)
                         .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMainLayout.createSequentialGroup()
-                                .addComponent(outputTextfield)
+                                .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(panelMainLayout.createSequentialGroup()
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(inputTextfield))
+                                    .addGroup(panelMainLayout.createSequentialGroup()
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(33, 33, 33)
+                                        .addComponent(keyTextfield)))
                                 .addGap(34, 34, 34)
-                                .addComponent(outputButton))
+                                .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(keyButton)
+                                    .addComponent(inputButton)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMainLayout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(10, 10, 10)
+                                .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMainLayout.createSequentialGroup()
+                                        .addComponent(outputTextfield)
+                                        .addGap(34, 34, 34)
+                                        .addComponent(outputButton))
+                                    .addGroup(panelMainLayout.createSequentialGroup()
+                                        .addGap(33, 33, 33)
+                                        .addComponent(encryptButton)
+                                        .addGap(83, 83, 83)
+                                        .addComponent(decryptButton)
+                                        .addGap(0, 152, Short.MAX_VALUE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMainLayout.createSequentialGroup()
+                                .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(panelMainLayout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(radioButtonDES)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(radioButtonAES)
+                                        .addGap(34, 34, 34))
+                                    .addGroup(panelMainLayout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(jLabel6)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(radioButtonSingleFile)
+                                        .addGap(4, 4, 4)))
+                                .addComponent(radioButtonFolder)
+                                .addGap(10, 10, 10))
                             .addGroup(panelMainLayout.createSequentialGroup()
-                                .addGap(185, 185, 185)
-                                .addComponent(decryptButton)
-                                .addGap(0, 142, Short.MAX_VALUE))))
+                                .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(panelMainLayout.createSequentialGroup()
+                                        .addComponent(genButton, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(panelMainLayout.createSequentialGroup()
+                                        .addComponent(txtFirstMd5)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnFirstMd5))
+                                    .addGroup(panelMainLayout.createSequentialGroup()
+                                        .addComponent(txtsecondMd5)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnSecondMd5)))))
+                        .addGap(22, 22, 22))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMainLayout.createSequentialGroup()
-                        .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelMainLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(radioButtonSingleFile))
-                            .addGroup(panelMainLayout.createSequentialGroup()
-                                .addGap(179, 179, 179)
-                                .addComponent(encryptButton)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(panelMainLayout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(radioButtonDES)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(radioButtonAES)
-                                .addGap(30, 30, 30)))
-                        .addGap(4, 4, 4)
-                        .addComponent(radioButtonFolder)
-                        .addGap(10, 10, 10))
-                    .addGroup(panelMainLayout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtsecondMd5)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnSecondMd5)))
-                .addGap(22, 22, 22))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMainLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(genButton, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(135, 135, 135))
+                        .addComponent(jSeparator1)
+                        .addContainerGap())))
+            .addComponent(jScrollPane1)
         );
         panelMainLayout.setVerticalGroup(
             panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -334,11 +376,13 @@ public class Form extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(outputTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(outputButton))
-                .addGap(18, 18, 18)
-                .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(encryptButton)
-                    .addComponent(decryptButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(decryptButton)
+                    .addComponent(encryptButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtFirstMd5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -348,29 +392,23 @@ public class Form extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(txtsecondMd5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSecondMd5))
-                .addGap(18, 18, 18)
+                .addGap(16, 16, 16)
                 .addComponent(genButton)
-                .addGap(9, 9, 9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-
-        textArea.setColumns(20);
-        textArea.setRows(5);
-        jScrollPane1.setViewportView(textArea);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panelMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -508,6 +546,11 @@ public class Form extends javax.swing.JFrame {
         md5Chooser.showOpenDialog(null);
         md5File = md5Chooser.getSelectedFile();
         txtFirstMd5.setText(md5File.getAbsolutePath());
+        if(!txtFirstMd5.getText().trim().isEmpty() && !txtsecondMd5.getText().trim().isEmpty()){
+            
+            genButton.setEnabled(true);
+        }
+        
     }//GEN-LAST:event_btnFirstMd5ActionPerformed
 
     private void genButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genButtonActionPerformed
@@ -516,19 +559,19 @@ public class Form extends javax.swing.JFrame {
             String hash1="";
             File firstmd5 = new File(txtFirstMd5.getText());
             hash1 = MD5.getHash(firstmd5);
-            textArea.append("MD5 Hash value of first file ("+txtFirstMd5.getText()+") : "+hash1+"\n");
+            updateAreaText("MD5 Hash value of first file ("+txtFirstMd5.getText()+") : "+hash1);
             
             // TODO add your handling code here:
             String hash2="";
-            File secondmd5 = new File(txtFirstMd5.getText());
+            File secondmd5 = new File(txtsecondMd5.getText());
             hash2 = MD5.getHash(secondmd5);
-            textArea.append("MD5 Hash value of second file ("+txtsecondMd5.getText()+") : "+hash2+"\n");
+            updateAreaText("MD5 Hash value of second file ("+txtsecondMd5.getText()+") : "+hash2);
             
             if(hash1.equals(hash2)){
-                textArea.append("File after decrypt is integrity\n");
+                updateAreaText("File after decrypt is integrity.");
             }
             else{
-                textArea.append("File after decrypt is non integrity\n");
+                updateAreaText("File after decrypt is non integrity.");
             }
 
         } catch (IOException ex) {
@@ -549,14 +592,17 @@ public class Form extends javax.swing.JFrame {
         secondmd5Chooser.showOpenDialog(null);
         File secondmd5File = secondmd5Chooser.getSelectedFile();
         txtsecondMd5.setText(secondmd5File.getAbsolutePath());
+         if(!txtFirstMd5.getText().trim().isEmpty() && !txtsecondMd5.getText().trim().isEmpty()){
+            
+            genButton.setEnabled(true);
+        }
     }//GEN-LAST:event_btnSecondMd5ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     
- 
-    
+   
     
     public void encrypt()
     {
@@ -570,7 +616,7 @@ public class Form extends javax.swing.JFrame {
         
         
         Encrypt en = Encrypt.getEncrypter(false);
-        en.encryptor(input, output, key);
+        en.encryptor(input, output, key,alg,this);
     }
     
     public void decrypt()
@@ -585,13 +631,16 @@ public class Form extends javax.swing.JFrame {
         File output = new File(outputPath);
         
         Decrypt en = Decrypt.getDecrypter(false);
-        en.decryptor(input, output, key);
+        en.decryptor(input, output, key,alg,this);
     }
-    public void genmd5(File file){
-        
+    public void updateAreaText(String s){     
+        textArea.append(s+"\n");
         
     }
     
+    /**
+     *
+     */
     public static void createForm() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -644,6 +693,7 @@ public class Form extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton keyButton;
     private javax.swing.JTextField keyTextfield;
     private javax.swing.JButton outputButton;
