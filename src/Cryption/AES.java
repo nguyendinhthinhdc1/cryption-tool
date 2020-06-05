@@ -23,7 +23,7 @@ public class AES {
     private static SecretKeySpec secretKey;
     private static byte[] key;
  
-    public static void setKey(String myKey) 
+    private static void setKey(String myKey) 
     {
         MessageDigest sha = null;
         try {
@@ -41,7 +41,7 @@ public class AES {
         }
     }
  
-    public static byte[] encrypt(byte[] strToEncrypt, String secret) 
+    public static byte[] encrypt(byte[] bytesToEncrypt, String secret) 
     {
         try
         {
@@ -50,7 +50,7 @@ public class AES {
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             //return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
-            return cipher.doFinal(strToEncrypt);
+            return cipher.doFinal(bytesToEncrypt);
         } 
         catch (Exception e) 
         {
@@ -59,7 +59,7 @@ public class AES {
         return null;
     }
  
-    public static byte[] decrypt(byte[] strToDecrypt, String secret) 
+    public static byte[] decrypt(byte[] bytesToDecrypt, String secret) 
     {
         try
         {
@@ -68,7 +68,7 @@ public class AES {
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             //return new String(cipher.doFinal(Base64.getMimeDecoder().decode(strToDecrypt)));
-            return cipher.doFinal(strToDecrypt);
+            return cipher.doFinal(bytesToDecrypt);
             
         } 
         catch (Exception e) 

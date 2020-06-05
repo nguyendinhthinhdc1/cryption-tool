@@ -46,7 +46,7 @@ public class Decrypt
                 form.updateAreaText("Decryting...");
                 copyDecrypted(src, dst,key,alg);
                 if(deleteOriginal) src.delete();
-                System.out.println("1 files is decrytped");
+                form.updateAreaText("1 files is decrytped");
             } else
             {
                 File[] files = src.listFiles();
@@ -92,8 +92,6 @@ public class Decrypt
             String fileName = bytesToString(name);
             os = new FileOutputStream(dest.getPath().concat("/").concat(fileName));
             byte[] buffer = new byte[(int)source.length()-sizename-1];
-            System.out.println(source.length());
-            System.out.println(sizename);
             
             is.read(buffer);
             if(alg.equals(Form.algorithm.aes)){
